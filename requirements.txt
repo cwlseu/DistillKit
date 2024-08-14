@@ -4,3 +4,4 @@ safetensors
 transformers
 trl
 hf_transfer
+sentencepiece

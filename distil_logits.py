@@ -7,6 +7,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments
 from accelerate import Accelerator
 import yaml
 
+teacher_model_path = os.environ.get("TEACHER_MODEL_PATH", "lmsys/vicuna-13b-v1.5")
+student_model_path = os.environ.get("STUDENT_MODEL_PATH", "philkrav/tinyllama-1.3b-draft-llama-13b-chat")
+
 # Configuration
 config = {
     "project_name": "distil-logits",
@@ -17,8 +20,8 @@ config = {
         "seed": 42
     },
     "models": {
-        "teacher": "arcee-ai/Arcee-Spark",
-        "student": "Qwen/Qwen2-1.5B"
+        "teacher": teacher_model_path,
+        "student": student_model_path
     },
     "tokenizer": {
         "max_length": 4096,
@@ -35,7 +38,7 @@ config = {
         "weight_decay": 0.05,
         "warmup_ratio": 0.1,
         "lr_scheduler_type": "cosine",
-        "resume_from_checkpoint": None,  # Set to a path or True to resume from the latest checkpoint
+        "resume_from_checkpoint": True,  # Set to a path or True to resume from the latest checkpoint
         "fp16": False,
         "bf16": True
     },
